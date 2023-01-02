@@ -134,6 +134,7 @@ int area_of_triangle_heron_formula(int a, int b, int c) {
 	return sqrt(result);
 }
 
+//sum and counter of all from 3 positive numbers
 void zad1(int a, int b, int c)
 {
 	int counter;
@@ -178,6 +179,7 @@ void zad1(int a, int b, int c)
 
 }
 
+//the-biggest number from 3
 void zad2(int a, int b, int c) {
 
 	int biggest;
@@ -226,53 +228,127 @@ void zad2(int a, int b, int c) {
 
 }
 
-//void zad3(int a, int b, int c) 
-//{
-//	int start;
-//	int middle;
-//	int end;
-//
-//	__asm {
-//		mov eax, a
-//		cmp eax, b
-//		jle firstPath
-//		//if a>b
-//		jmp secondPath
-//
-//		firstPath:
-//		cmp eax, c
-//		jle pathA
-//		//
-//		mov eax, c
-//	    jmp 
-//
-//        secondPath:
-//
-//		pathA:
-//		mov start, eax
-//		mov eax, b
-//		cmp eax, c
-//		jle finishPath1
-//
-//		finishPath1:
-//		mov middle, eax
-//		mov eax, c
-//		mov end, eax
-//		jmp finish
-//
-//		finishPath2:
-//
-//
-//        
-//
-//
-//
-//			finish :
-//
-//		
-//	}
-//
-//}
+
+//descending order of 3 numbers using nested if in assembly
+void zad3(int a, int b, int c)
+{
+	int start;
+	int middle;
+	int end;
+
+	__asm {
+		mov eax, a
+		cmp eax, b
+		//a<b
+		jle firstPath
+		//a>b
+		jmp secondPath
+
+
+		firstPath :
+		cmp eax, c
+			//a<c
+			jle A_smallest
+			//a>c
+			jmp pathCAB
+
+			secondPath :
+		cmp eax, c
+			//a<c
+			jle pathBAC
+			//a>c
+			mov end, eax
+			jmp A_biggest
+
+			A_smallest :
+		mov start, eax
+			mov eax, b
+			cmp eax, c
+			//b<c
+			jle pathABC
+			//b>c
+			jmp pathACB
+
+
+			A_biggest :
+		mov end, eax
+			mov eax, b
+			cmp eax, c
+			// b<c
+			jle pathBCA
+			//b>c
+			jmp pathCBA
+
+
+			//-------------A-biggest-------------------//
+			//b<c<a
+		pathBCA:
+		mov start, eax
+			mov eax, c
+			mov middle, eax
+			jmp finish
+
+			//c<b<a
+			pathCBA :
+		mov middle, eax
+			mov eax, c
+			mov start, eax
+			jmp finish
+			//-------------A-biggest-------------------//
+
+
+
+			//-------------A-smallest-------------------//
+			//a<b<c
+		pathABC:
+		mov middle, eax
+			mov eax, c
+			mov end, eax
+			jmp finish
+
+			//a<c<b
+			pathACB :
+		mov end, eax
+			mov eax, c
+			mov middle, eax
+			jmp finish
+			//-------------A-smallest-------------------//
+			
+
+			//-------------A-middle--------------------//
+
+			//c<a<b
+		pathCAB:
+		mov middle, eax
+			mov eax, c
+			mov start, eax
+			mov eax, b
+			mov end, eax
+			jmp finish
+
+
+			//b<a<c
+		pathBAC:
+		mov middle, eax
+			mov eax, c
+			mov end, eax
+			mov eax, b
+			mov start, eax
+			jmp finish
+			//-------------A-middle--------------------//
+
+
+
+
+
+		finish:
+
+
+	}
+
+	cout << "Descending order of the numbers looks like this " << "{ " << start << " | " << middle << " | " << end << " }" << endl;
+
+}
 
 int main()
 {
@@ -289,12 +365,13 @@ int main()
 	cout << area_of_triangle_heron_formula(10, 7, 7) << endl;
 	*/
 
-	int a =1;
+	int a = 1;
 	int b = 10;
 	int c = 12;
 	int d = -13;
 	zad1(a, d, c);
 	zad2(a, d, c);
+	zad3(b,a, c);
 }
 
 
