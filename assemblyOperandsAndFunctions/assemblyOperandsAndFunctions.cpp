@@ -96,8 +96,8 @@ int area_of_cube(int a) {
 	}
 }
 
- //not the best optimized variant because i use integer and possible loss of data
- // P = sqrt(s*(s-a)*(s-b)*(s-c) ); s = (a + b + c)/2
+//not the best optimized variant because i use integer and possible loss of data
+// P = sqrt(s*(s-a)*(s-b)*(s-c) ); s = (a + b + c)/2
 int area_of_triangle_heron_formula(int a, int b, int c) {
 
 	int result = 0;
@@ -128,15 +128,156 @@ int area_of_triangle_heron_formula(int a, int b, int c) {
 		sub ecx, c //s-c
 		mul ecx    //eax = s*(s-a)*(s-b)*(s-c)
 
-		mov result, eax 
+		mov result, eax
 	}
 
 	return sqrt(result);
 }
 
+void zad1(int a, int b, int c)
+{
+	int counter;
+	int sum;
+
+	__asm {
+
+		mov eax, 0
+		cmp a, 0
+		jg positiveA
+		finishFirst :
+		cmp b, 0
+			jg positiveB
+			finishSecond :
+		cmp c, 0
+			jg positiveC
+			finishThird :
+		jmp finish
+
+			positiveA :
+		inc ecx
+			add eax, a
+			jmp finishFirst
+
+			positiveB :
+		inc ecx
+			add eax, b
+			jmp finishSecond
+
+			positiveC :
+		inc ecx
+			add eax, c
+			jmp finishThird
+
+			finish :
+		mov sum, eax
+			mov counter, ecx
+	}
+
+	cout << "The sum of the positive numbers: " << sum << endl;
+	cout << "The counter of the positive numbers: " << counter << endl;
+
+}
+
+void zad2(int a, int b, int c) {
+
+	int biggest;
+
+	__asm {
+		mov eax, a
+		cmp eax, b
+		//if a is bigger or equal then we 
+		//need to simply compare {a} and {c} 
+		jge firstPath
+		//if its not bigger then should be {b}
+		mov eax, b
+		jmp secondPath
+
+		secondPath :
+		cmp eax, c
+			jge biggestB
+			//if its not 
+			mov eax, c
+			jmp biggestC
+
+
+			firstPath :
+		cmp eax, c
+			jge biggestA
+			//then C is bigger
+			mov eax, c
+			jmp biggestC
+
+			biggestA :
+		mov biggest, eax
+			jmp finish
+
+			biggestB :
+		mov biggest, eax
+			jmp finish
+
+			biggestC :
+		mov biggest, eax
+			jmp finish
+
+			finish :
+	}
+
+	cout << "The biggest number is: " << biggest << endl;
+
+}
+
+//void zad3(int a, int b, int c) 
+//{
+//	int start;
+//	int middle;
+//	int end;
+//
+//	__asm {
+//		mov eax, a
+//		cmp eax, b
+//		jle firstPath
+//		//if a>b
+//		jmp secondPath
+//
+//		firstPath:
+//		cmp eax, c
+//		jle pathA
+//		//
+//		mov eax, c
+//	    jmp 
+//
+//        secondPath:
+//
+//		pathA:
+//		mov start, eax
+//		mov eax, b
+//		cmp eax, c
+//		jle finishPath1
+//
+//		finishPath1:
+//		mov middle, eax
+//		mov eax, c
+//		mov end, eax
+//		jmp finish
+//
+//		finishPath2:
+//
+//
+//        
+//
+//
+//
+//			finish :
+//
+//		
+//	}
+//
+//}
+
 int main()
 {
-	
+
+	/*
 	cout << perimeter_of_rectangle(10, 5) << endl;
 	cout << area_of_rectangle(10, 5) << endl;
 	cout << perimeter_of_square(10) << endl;
@@ -146,6 +287,14 @@ int main()
 	cout << perimeter_of_rectangular_triangle(6, 10) << endl;
 	cout << area_of_cube(10) << endl;
 	cout << area_of_triangle_heron_formula(10, 7, 7) << endl;
+	*/
 
-
+	int a =1;
+	int b = 10;
+	int c = 12;
+	int d = -13;
+	zad1(a, d, c);
+	zad2(a, d, c);
 }
+
+
