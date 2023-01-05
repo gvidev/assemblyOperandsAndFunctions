@@ -367,6 +367,7 @@ int factorial(int n) {
 
 static int arr[10];
 
+//array where every item has move {n} from last item 
 void multiply(int n) {
 	__asm {
 		mov eax, n
@@ -384,6 +385,7 @@ void multiply(int n) {
 
 static int arr2[10] = { 1,2,3,4,5,6,7,8,9,10 };
 
+//every item from the array at pow2 -> item^2
 void pow2() {
 	__asm {
 		mov eax, [arr2]
@@ -402,6 +404,8 @@ void pow2() {
 
 static int arr3[10];
 
+
+//sum of the n-items from the fibonacci sequence
 void fibonacci(int count) {
 	int temp = 2;
 	__asm {
@@ -510,13 +514,26 @@ int main()
 	cout << area_of_triangle_heron_formula(10, 7, 7) << endl;
 	*/
 
-	int a = 1;
+	/*int a = 1;
 	int b = 10;
 	int c = 12;
 	int d = -13;
 	zad1(a, d, c);
 	zad2(a, d, c);
-	zad3(b,a, c);
+	zad3(b,a, c);*/
+
+	cout << factorial(5) << endl;
+	multiply(2);
+	PrintArray(arr, 10);
+	pow2();
+	cout << endl;
+	PrintArray(arr2, 10);
+	cout << endl;
+	fibonacci(10);
+	cout << endl;
+	PrintArray(arr3, 10);
+	cout << endl;
+	factorialDivide(13, 9);
 }
 
 
