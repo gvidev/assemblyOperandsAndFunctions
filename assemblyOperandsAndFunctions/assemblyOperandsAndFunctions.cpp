@@ -350,6 +350,38 @@ void zad3(int a, int b, int c)
 
 }
 
+
+//n! = n.n-1.n-2...1
+int factorial(int n) {
+	__asm {
+		mov eax, 1
+		mov ecx, 1
+
+		f:
+		imul eax, ecx
+			inc ecx
+			cmp n, ecx
+			jge f
+	}
+}
+
+static int arr[10];
+
+void multiply(int n) {
+	__asm {
+		mov eax, n
+		mov ecx, 0
+
+		for:
+		mov[arr + 4 * ecx], eax
+			add eax, n
+			inc ecx
+			cmp ecx, 10
+			jl for
+	}
+
+}
+
 int main()
 {
 
