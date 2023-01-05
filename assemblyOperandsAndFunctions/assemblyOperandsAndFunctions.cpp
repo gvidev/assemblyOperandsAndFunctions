@@ -382,6 +382,119 @@ void multiply(int n) {
 
 }
 
+static int arr2[10] = { 1,2,3,4,5,6,7,8,9,10 };
+
+void pow2() {
+	__asm {
+		mov eax, [arr2]
+		imul eax
+		mov ecx, 0
+
+		for:
+		mov[arr2 + 4 * ecx], eax
+			inc ecx
+			mov eax, [arr2 + 4 * ecx]
+			imul eax
+			cmp ecx, 10
+			jl for
+	}
+}
+
+static int arr3[10];
+
+void fibonacci(int count) {
+	int temp = 2;
+	__asm {
+		mov eax, 1
+		mov ebx, 1
+		mov[arr3], eax
+		mov[arr3 + 4], ebx
+		mov ecx, 2
+
+
+		for:
+		add eax, ebx
+			add temp, eax
+			mov[arr3 + 4 * ecx], eax
+			mov eax, [arr3 + 4 * ecx - 4]
+			mov ebx, [arr3 + 4 * ecx]
+			inc ecx
+			cmp ecx, count
+			jl for
+
+
+
+	}
+	cout << temp << endl;
+}
+
+//  n!/k! where n>k>1
+void factorialDivide(int n, int k) {
+	int check = 1;
+	int result = 1;
+
+
+	__asm {
+		mov eax, 1
+		mov ebx, k
+		mov ecx, n
+
+		cmp ecx, ebx
+		jl firstPath
+		cmp ebx, eax
+		jl secondPath
+		cmp ebx, ecx
+		je thirdPath
+		jmp looping
+
+
+
+	firstPath:
+		mov check, -1
+			jmp return
+
+			secondPath :
+			mov check, 0
+			jmp return
+
+			thirdPath :
+			jmp return
+
+
+			looping :
+			inc ebx
+			mul ebx
+			cmp ecx, ebx
+			//n >  k
+			jg looping
+			jmp return
+
+
+
+			return :
+		mov result, eax
+	}
+
+	if (check == -1) {
+		cout << "Please enter different numbers! (k>n)" << endl;
+	}
+	else if (check == 0) {
+		cout << "Please enter different numbers! (k<1)" << endl;
+	}
+	else {
+		cout << "The result from dividing " << n << "! and " << k << "! is " << result << endl;
+	}
+}
+
+
+void PrintArray(int* array, int n) {
+	for (int i = 0; i < n; i++)
+	{
+		cout << " | " << array[i];
+	}
+	cout << " | " << endl;
+}
+
 int main()
 {
 
